@@ -4,8 +4,7 @@
   --rootPaddingBottom: 5px;
   --rootPaddingLeft: 5px;
   --pageBackgroundColor: #000;
-  /*--pageBackgroundImgOpacity: 0;*/
-  --pageBackgroundImgOpacity: 0.5;
+  --pageBackgroundImgOpacity: 0;
 }
 
 html,
@@ -32,7 +31,7 @@ body {
   /*display: flex;*/
   /*flex-direction: column;*/
 }
-body:before {
+body::before {
   content: "";
   position: absolute;
   top: 0;
@@ -118,8 +117,4 @@ body:before {
 #slides img.active {
   opacity: 0.8;
   border-color: #24ae01;
-}
-#slides img:hover {
-  opacity: 0.6;
-  border-color: #fff;
 }

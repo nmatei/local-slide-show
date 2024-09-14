@@ -47,14 +47,15 @@ const slidesConfig = {
   minOpacity: 0,
   maxOpacity: 0.8,
   opacityIntervals: {
-    6: 0.8,
-    7: 0.7,
+    5: 0.9,
+    6: 0.5,
+    7: 0.4,
     8: 0.2,
     9: 0,
     18: 0.3,
     20: 0.5,
     21: 0.7,
-    22: 0.8
+    22: 0.9
   }
 };
 
@@ -70,9 +71,30 @@ function updateOpacity() {
     }
   });
   opacity = Math.min(config.maxOpacity, Math.max(config.minOpacity, opacity));
-  console.debug("opacity for hour %o = %o.", hour, opacity);
+  console.debug("opacity for hour %o = %o", hour, opacity);
+  // modern browsers support CSS variables change
   document.documentElement.style.setProperty("--pageBackgroundImgOpacity", opacity);
+
+  // check if navigator is safari and check version (find if os is ios9)
+  if (navigator.userAgent.match(/(iPad|iPhone);.*CPU.*OS 9_\d/i)) {
+    //console.warn("Safari detected", navigator.userAgent);
+    setBodyBeforeBackgroundColor("body::before", `rgba(0, 0, 0, ${opacity})`);
+  }
   return opacity;
+}
+
+// old browsers support
+function setBodyBeforeBackgroundColor(selector, color) {
+  const sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    const rules = sheets[i].cssRules || sheets[i].rules;
+    for (var j = 0; j < rules.length; j++) {
+      if (rules[j].selectorText === selector) {
+        rules[j].style.backgroundColor = color;
+        return;
+      }
+    }
+  }
 }
 
 function getNextChangeTimeout() {
