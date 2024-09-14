@@ -1,7 +1,6 @@
 // Register the service worker
 if ("serviceWorker" in navigator) {
-  // for local use only (when testing)
-  //console.debug = console.info = console.warn = console.error = console.log = log;
+  console.log("Service Worker %o", "is supported");
   window.addEventListener("load", function () {
     navigator.serviceWorker
       .register("/js/service-worker.js")
@@ -13,7 +12,7 @@ if ("serviceWorker" in navigator) {
       });
   });
 } else {
-  //console.debug = console.info = console.warn = console.error = log;
+  console.log("Service Worker %o", "not supported");
 }
 
 function setBackground(background) {
@@ -63,13 +62,13 @@ function updateOpacity() {
   const config = slidesConfig;
   const date = new Date();
   const firstIntervalHour = Object.keys(config.opacityIntervals)[0];
-  let opacity = slidesConfig.opacityIntervals[firstIntervalHour];
+  var opacity = slidesConfig.opacityIntervals[firstIntervalHour];
   const hour = date.getHours();
-  for (let key in config.opacityIntervals) {
+  Object.keys(config.opacityIntervals).forEach(function (key) {
     if (hour >= key) {
       opacity = config.opacityIntervals[key];
     }
-  }
+  });
   opacity = Math.min(config.maxOpacity, Math.max(config.minOpacity, opacity));
   console.debug("opacity for hour %o = %o.", hour, opacity);
   document.documentElement.style.setProperty("--pageBackgroundImgOpacity", opacity);
@@ -79,7 +78,7 @@ function updateOpacity() {
 function getNextChangeTimeout() {
   const date = new Date();
   const minutes = slidesConfig.changeImageMinutes;
-  let timeoutSeconds = (minutes - (date.getMinutes() % minutes)) * 60 * 1000 - date.getSeconds() * 1000;
+  const timeoutSeconds = (minutes - (date.getMinutes() % minutes)) * 60 * 1000 - date.getSeconds() * 1000;
   date.setMilliseconds(date.getMilliseconds() + timeoutSeconds);
   console.debug("timeoutSeconds %o next: %o.", timeoutSeconds, date.toTimeString().substring(0, 8));
   return timeoutSeconds;
@@ -150,9 +149,13 @@ function initEvents() {
   });
 
   $("#clear").addEventListener("click", function () {
-    if (confirm("Are you sure you want to clear all images?")) {
+    console.info("clear clicked");
+    const confirmed = confirm("Are you sure you want to clear all images?");
+    if (confirmed) {
       localStorage.removeItem("files");
-      $$("#slides img").forEach(img => img.remove());
+      $$("#slides img").forEach(function (img) {
+        img.remove();
+      });
     }
   });
 
@@ -160,6 +163,7 @@ function initEvents() {
   setTimeout(displayNextImage, getNextChangeTimeout());
 }
 
+console.warn("index.js loaded");
 initEvents();
 
 startClock();
