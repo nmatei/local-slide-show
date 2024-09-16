@@ -3,17 +3,17 @@ const CACHE_NAME = "offline-cache-v1";
 
 // Resources to cache
 const OFFLINE_ASSETS = [
-  "/",
-  "/index.html",
-  "/manifest.json",
+  "./",
+  "./index.html",
+  "./manifest.json",
   // css
-  "/css/action-btn.css",
-  "/css/clock.css",
-  "/css/style.css",
+  "./css/action-btn.css",
+  "./css/clock.css",
+  "./css/style.css",
   // js
-  "/js/clock.js",
-  "/js/index.js",
-  "/js/utils.js"
+  "./js/clock.js",
+  "./js/index.js",
+  "./js/utils.js"
 ];
 
 // Install the service worker and cache assets
