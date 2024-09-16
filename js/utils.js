@@ -1,5 +1,5 @@
 // for local use only (when testing)
-// console.debug = console.info = console.warn = console.error = console.log = log;
+console.debug = console.info = console.warn = console.error = console.log = log;
 
 window.onerror = function (message, source, lineno, colno, error) {
   console.warn(
