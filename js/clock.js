@@ -15,6 +15,7 @@ function startClock(showSeconds) {
   } else {
     config.clockEl = document.createElement("div");
     config.clockEl.id = "clock";
+    config.clockEl.classList.add("clock");
     document.body.appendChild(config.clockEl);
   }
   changeClock();

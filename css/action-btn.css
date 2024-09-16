@@ -13,7 +13,7 @@
   flex: 1;
 }
 .action-btn {
-  background-color: transparent;
+  background-color: #00000088;
   display: inline-block;
   cursor: pointer;
   min-width: 40px;
